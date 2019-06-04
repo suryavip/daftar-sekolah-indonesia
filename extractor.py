@@ -44,13 +44,13 @@ for areaID in areaIDs:
     val = []
     q = []
     for s in schools:
-        val += [d for d in s]
-        tq = ['%' for d in s]
+        val += [s[d] for d in s]
+        tq = ['%s' for d in s]
         q.append('({})'.format(','.join(tq)))
     q = ','.join(q)
 
     query = 'INSERT INTO sekolah ({}) VALUES {}'.format(cols, q)
-    cursor.execute((query), val)
+    cursor.execute((query), tuple(val))
 
     '''result = {}
     result[areaID] = schools
@@ -59,5 +59,7 @@ for areaID in areaIDs:
 
     done += 1
     print('progress: {}/{}'.format(done, len(areaIDs)))
+
+db.commit()
 
 print('FINISH!')
